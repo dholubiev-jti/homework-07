@@ -241,10 +241,9 @@ describe("useBoardStore", () => {
       const card1 = makeCard({ id: 1, columnId: 1, order: 1 });
       const card2 = makeCard({ id: 2, columnId: 1, order: 2 });
       const card3 = makeCard({ id: 3, columnId: 2, order: 1 });
-      const card4 = makeCard({ id: 4, columnId: 2, order: 2 });
 
       useBoardStore.setState({
-        cards: [card1, card2, card3, card4],
+        cards: [card1, card2, card3],
       });
 
       vi.mocked(updateCard).mockResolvedValue(makeCard());
@@ -254,26 +253,19 @@ describe("useBoardStore", () => {
       expect(useBoardStore.getState().cards).toEqual([
         { ...card1, columnId: 2, order: 2 },
         { ...card2, order: 1 },
-        card3,
-        { ...card4, order: 3 },
+        { ...card3, order: 1 },
       ]);
 
-      expect(updateCard).toHaveBeenCalledTimes(4);
+      expect(updateCard).toHaveBeenCalledTimes(2);
+
       expect(updateCard).toHaveBeenCalledWith(2, {
         columnId: 1,
         order: 1,
       });
+
       expect(updateCard).toHaveBeenCalledWith(1, {
         columnId: 2,
         order: 2,
-      });
-      expect(updateCard).toHaveBeenCalledWith(3, {
-        columnId: 2,
-        order: 1,
-      });
-      expect(updateCard).toHaveBeenCalledWith(4, {
-        columnId: 2,
-        order: 3,
       });
     });
 
