@@ -9,12 +9,13 @@ import useAuthStore from "@/store/useAuthStore";
 import useCardData from "./useCardData";
 import useCardChecklist from "./useCardChecklist";
 
-import { cardSchema, type CardForm } from "@/schemas/cardSchema";
+import { cardSchema } from "@/schemas/cardSchema";
 import {
   getCardFormPayload,
   getInitialCardForm,
   getNextCardOrder,
 } from "@/utils/cardForm";
+import type { CardForm } from "@/types";
 
 interface UseCardFormProps {
   id?: number;
