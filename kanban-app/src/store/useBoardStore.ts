@@ -180,8 +180,20 @@ const useBoardStore = create<BoardStore>((set, get) => ({
     });
 
     try {
+      const cardsToUpdate = changedCards.filter((card) => {
+        const previousCard = previousCards.find(
+          (previous) => previous.id === card.id,
+        );
+
+        return (
+          previousCard &&
+          (previousCard.columnId !== card.columnId ||
+            previousCard.order !== card.order)
+        );
+      });
+
       await Promise.all(
-        changedCards.map((card) =>
+        cardsToUpdate.map((card) =>
           updateCard(card.id, {
             columnId: card.columnId,
             order: card.order,
